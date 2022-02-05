@@ -11,7 +11,7 @@ namespace Data.Interfaces
         Task Add(T Objeto);
         Task Update(T Objeto);
         Task Delete(T Objeto);
-        Task<T> GwetEntityById(int Id);
+        Task<T> GetEntityById(int Id);
         Task<List<T>> list();
     }
 }

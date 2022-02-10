@@ -10,5 +10,9 @@ namespace Data.Repositorio
 {
     public class RepositoryProduto : RepositoryGenerics<Produto>, IProduto
     {
+        public Task<List<Produto>> ListagemCustomizada()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace Data.Config
 
         private string GetStringConectionConfig()
         {
-            string strCon = "Data Sourse=DESKTOP-FPH60V2\\DESENVOLVIMENTO;Initial catalog=PROJETO_api;Integrated Security=False;User ID=sa;Password=GabrielBc5891;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
+            string strCon = "Data Sourse=DESKTOP-FPH60V2\\DESENVOLVIMENTO;Initial catalog=PROJETO_API;Integrated Security=False;User ID=sa;Password=GabrielBc5891;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
 
             return strCon;
         }

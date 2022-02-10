@@ -2,6 +2,7 @@ using Data.Config;
 using Data.Entidades;
 using Data.Interfaces;
 using Data.Repositorio;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,11 +12,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebAPI.Data;
+using WebAPI.Token;
 
 namespace WebAPI
 {
@@ -50,6 +53,37 @@ namespace WebAPI
 
             services.AddSingleton(typeof(IGeneric<>), typeof(RepositoryGenerics<>));
             services.AddSingleton<IProduto, RepositoryProduto>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(option =>
+                {
+                    option.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidIssuer = "Teste.Security.Bearer",
+                        ValidAudience = "Teste.Security.Bearer",
+                        IssuerSigningKey = JwtSecurityKey.Create("Security_Key-12345678")
+
+                    };
+
+                    option.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            Console.WriteLine("OnAuthenticationFiled: " + context.Exception.Message);
+                            return Task.CompletedTask;
+                        },
+                        OnTokenValidated = context =>
+                        {
+                            Console.WriteLine("OnTokenValidated: " + context.SecurityToken);
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

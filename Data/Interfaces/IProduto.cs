@@ -9,5 +9,6 @@ namespace Data.Interfaces
 {
     public interface IProduto : IGeneric<Produto>
     {
+        Task<List<Produto>> ListagemCustomizada();
     }
 }
